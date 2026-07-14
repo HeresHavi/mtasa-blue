@@ -804,6 +804,16 @@ int CLuaBrowserDefs::ResizeBrowser(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
+        if (!std::isfinite(size.fX) || !std::isfinite(size.fY))
+            argStream.SetCustomError("Browser dimensions must be finite", "Invalid parameter");
+        else if (size.fX < 1 || size.fY < 1)
+            argStream.SetCustomError("A browser must be at least 1x1 in size.", "Invalid parameter");
+        else if (static_cast<double>(size.fX) > std::numeric_limits<int>::max() || static_cast<double>(size.fY) > std::numeric_limits<int>::max())
+            argStream.SetCustomError("Browser dimensions exceed the supported range", "Invalid parameter");
+    }
+
+    if (!argStream.HasErrors())
+    {
         pWebBrowser->Resize(size);
         lua_pushboolean(luaVM, true);
         return 1;
