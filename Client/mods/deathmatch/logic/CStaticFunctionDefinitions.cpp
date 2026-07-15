@@ -4596,10 +4596,14 @@ bool CStaticFunctionDefinitions::SetPickupType(CClientEntity& Entity, unsigned c
     return false;
 }
 
-bool CStaticFunctionDefinitions::CreateExplosion(CVector& vecPosition, unsigned char ucType, bool bMakeSound, float fCamShake, bool bDamaging)
+bool CStaticFunctionDefinitions::CreateExplosion(CVector& vecPosition, int iType, bool bMakeSound, float fCamShake, bool bDamaging)
 {
+    // Keep the Lua value signed until validation so invalid IDs cannot wrap into a valid byte.
+    if (iType < EXP_TYPE_GRENADE || iType > EXP_TYPE_TINY)
+        return false;
+
     // TODO: add creators for kill credit
-    eExplosionType explosionType = (eExplosionType)ucType;
+    eExplosionType explosionType = static_cast<eExplosionType>(iType);
     m_pExplosionManager->Create(explosionType, vecPosition, NULL, bMakeSound, fCamShake, !bDamaging);
 
     return true;

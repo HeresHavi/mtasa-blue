@@ -174,7 +174,7 @@ int CLuaWorldDefs::CreateExplosion(lua_State* luaVM)
 
     if (!argStream.HasErrors())
     {
-        if (CStaticFunctionDefinitions::CreateExplosion(vecPosition, static_cast<unsigned char>(iType), bMakeSound, fCamShake, bDamaging))
+        if (CStaticFunctionDefinitions::CreateExplosion(vecPosition, iType, bMakeSound, fCamShake, bDamaging))
         {
             lua_pushboolean(luaVM, true);
             return 1;

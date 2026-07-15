@@ -8980,6 +8980,10 @@ bool CStaticFunctionDefinitions::UsePickup(CElement* pElement, CPlayer* pPlayer)
 
 bool CStaticFunctionDefinitions::CreateExplosion(const CVector& vecPosition, unsigned char ucType, CElement* pElement)
 {
+    // Only defined explosion types may be forwarded to client native code.
+    if (ucType > CExplosionSyncPacket::EXPLOSION_TINY)
+        return false;
+
     CLuaArguments arguments;
     arguments.PushNumber(vecPosition.fX);
     arguments.PushNumber(vecPosition.fY);

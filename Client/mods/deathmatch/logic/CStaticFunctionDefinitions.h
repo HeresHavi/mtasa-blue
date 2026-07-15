@@ -326,7 +326,7 @@ public:
     static bool SetPickupType(CClientEntity& Entity, unsigned char ucType, double dThree, double dFour);
 
     // Explosion funcs
-    static bool CreateExplosion(CVector& vecPosition, unsigned char ucType, bool bMakeSound, float fCamShake, bool bDamaging);
+    static bool CreateExplosion(CVector& vecPosition, int iType, bool bMakeSound, float fCamShake, bool bDamaging);
     static bool DetonateSatchels();
 
     // Fire funcs
