@@ -167,6 +167,10 @@ void CClientBuilding::Destroy()
 
 bool CClientBuilding::SetLowLodBuilding(CClientBuilding* pLod)
 {
+    // A building cannot represent both sides of the native high/low LOD relationship.
+    if (pLod == this)
+        return false;
+
     if (pLod)
     {
         // Remove prev LOD
